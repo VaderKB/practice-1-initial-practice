@@ -1,6 +1,7 @@
 name: First workflow
 on: 
   pull_request:
+    types: [opened]
 run-name: running first github flow
 jobs:
     first-job:
