@@ -1,6 +1,8 @@
 name: Job Artifacts
 on: 
     push:
+        branches:
+            - develop
 run-name: Job Artifact
 jobs:
     build-job:

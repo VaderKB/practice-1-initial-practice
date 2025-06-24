@@ -1,0 +1,21 @@
+name: outputs
+on: 
+    push:
+
+run-name: outputs
+jobs:
+    create-output:
+        runs-on: ubuntu-latest
+        outputs:
+            first-output: ${{ steps.publish-output.outputs.env }}
+        steps:
+            - name: create output
+              id: publish-output
+              run: echo "env=dev" >> $GITHUB_OUTPUT
+
+    show-output:
+        runs-on: ubuntu-latest
+        needs: create-output
+        steps:
+            - name: Show output
+              run: echo "value of environment is = ${{ needs.create-output.outputs.first-output }}"
