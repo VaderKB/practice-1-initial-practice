@@ -21,3 +21,13 @@ jobs:
               run: echo "haha" > file.txt
             - name: Show files
               run: ls -lrt
+    third-job:
+        runs-on: ubuntu-latest
+        needs: ['first-job']
+        steps:
+            - name: Output github context
+              run: echo "${{toJSON(github)}}"
+            - name: Other step
+              run: echo "hahahaha"
+            - name: added another
+              run: echo "another"
