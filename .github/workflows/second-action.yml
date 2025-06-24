@@ -24,9 +24,12 @@ jobs:
                     data2
     download-artifacts:
         runs-on: ubuntu-latest
+        needs: build-job
         steps:
             - name: Get artifact
               uses: actions/download-artifact@v4
               with:
                 name: 
                     built-files
+            - name: Show files
+              run: ls -lRt
