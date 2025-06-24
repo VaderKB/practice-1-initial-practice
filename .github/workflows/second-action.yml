@@ -1,0 +1,32 @@
+name: Job Artifacts
+on: 
+    push:
+run-name: Job Artifact
+jobs:
+    build-job:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Create a file
+              run: |
+                mkdir data1
+                mkdir data2
+                echo "this is for file1" > data1/file1.txt
+                echo "this is for file2" > data2/file2.txt
+                echo "print(Hello world)" > file3.txt
+            - name: Create artifact
+              uses: actions/upload-artifact@v4
+              with:
+                name: 
+                    built-files
+                path:
+                    file3.txt
+                    data1
+                    data2
+    download-artifacts:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Get artifact
+              uses: actions/download-artifact@v4
+              with:
+                name: 
+                    built-files
