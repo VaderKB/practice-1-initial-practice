@@ -1,0 +1,32 @@
+name: cache
+run-name: cache
+on: 
+    push:
+jobs:
+    create-cache:
+        runs-on: ubuntu-latest
+        steps: 
+            - name: Create data
+              run: |
+                    mkdir data1
+                    echo "this is for file1" > data1/file1.txt
+                    echo "this is for file2" > data1/file2.txt
+            - name: Cache data
+              uses: actions/cache@v4
+              with:
+                path: data1
+                key:  "cache_${{ github.run_id }}"
+    use-cache:
+        runs-on: ubuntu-latest
+        steps: 
+            - name: Create folder
+              run: mkdir data
+            - name: Read cache
+              uses: actions/cache@v4
+              with:
+                path: data
+                key: "cache_${{ github.run_id }}"
+            - name: Show data
+              run: |
+                cd data
+                ls -lRt
