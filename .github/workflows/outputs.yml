@@ -1,7 +1,8 @@
 name: outputs
 on: 
     push:
-
+        branches: 
+            - development
 run-name: outputs
 jobs:
     create-output:
