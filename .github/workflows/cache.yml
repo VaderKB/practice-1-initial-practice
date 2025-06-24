@@ -15,12 +15,12 @@ jobs:
               uses: actions/cache@v4
               with:
                 path: data1
-                key:  "cache_${{ github.run_number }}"
+                key: "cache_${{ github.run_number }}"
     use-cache:
         runs-on: ubuntu-latest
         steps: 
             - name: Create folder
-              run: mkdir data
+              run: mkdir data1
             - name: Read cache
               uses: actions/cache@v4
               with:
