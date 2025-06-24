@@ -18,7 +18,7 @@ jobs:
               with:
                 name: 
                     built-files
-                path:
+                path: |
                     file3.txt
                     data1
                     data2
