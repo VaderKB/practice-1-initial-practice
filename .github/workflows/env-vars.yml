@@ -1,0 +1,49 @@
+name: env vars
+run-name: env-vars
+on: 
+    push:
+env:
+    GLOBAL_VAR_1: global_var_1
+    GLOBAL_VAR_2: global_var_2
+    COMMON_VAR: global
+jobs:
+    first-job:
+        runs-on: ubuntu-latest
+        env:
+            FIRST_JOB_ENV_1: first_job_env_1
+            FIRST_JOB_ENV_2: first_job_env_2
+            COMMON_VAR: job1
+        steps:
+            - name: Checkout dir
+              uses: actions/checkout@v4
+            - name: Show files
+              run: ls -lrt
+            - name: Run script
+              run: python show-ev-vars.py
+            - name: Show env vars
+              run: |
+                echo "GLOBAL_VAR_1=${{ env.GLOBAL_VAR_1 }}"
+                echo "GLOBAL_VAR_2=${{ env.GLOBAL_VAR_2 }}"
+                echo "COMMON_VAR=${{ env.COMMON_VAR }}"
+                echo "FIRST_JOB_ENV_1=${{ env.FIRST_JOB_ENV_1 }}"
+                echo "FIRST_JOB_ENV_2=${{ env.FIRST_JOB_ENV_2 }}"
+    second-job:
+        runs-on: ubuntu-latest
+        env:
+            SECOND_JOB_ENV_1: second_job_env_1
+            SECOND_JOB_ENV_2: second_job_env_2
+            COMMON_VAR: job2
+        steps:
+            - name: Checkout dir
+              uses: actions/checkout@v4
+            - name: Show files
+              run: ls -lrt
+            - name: Run script
+              run: python show-ev-vars.py
+            - name: Show env vars
+              run: |
+                echo "GLOBAL_VAR_1=${{ env.GLOBAL_VAR_1 }}"
+                echo "GLOBAL_VAR_2=${{ env.GLOBAL_VAR_2 }}"
+                echo "COMMON_VAR=${{ env.COMMON_VAR }}"
+                echo "SECOND_JOB_ENV_1=${{ env.SECOND_JOB_ENV_1 }}"
+                echo "SECOND_JOB_ENV_2=${{ env.SECOND_JOB_ENV_2 }}"

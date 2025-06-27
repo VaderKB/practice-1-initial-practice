@@ -1,6 +1,8 @@
 name: all outputs
 on: 
     push:
+        branches:
+            - dev
 run-name: all outputs
 jobs:
     create-artifacts:
