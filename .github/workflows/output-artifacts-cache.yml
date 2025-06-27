@@ -1,0 +1,71 @@
+name: all outputs
+on: 
+    push:
+run-name: all outputs
+jobs:
+    create-artifacts:
+        runs-on: ubuntu-latest
+        steps:
+            - name: create files
+              run: |
+                mkdir data1
+                mkdir data2
+                echo "for file 1" > data1/text1.txt
+                echo "for file 2" > data2/text2.txt
+                echo "for file 3" > text3.txt
+            - name: create artifact
+              uses: actions/upload-artifact@v4
+              with: 
+                name: "artifact-${{github.run_number}}"
+                path : |
+                    data1
+                    data2
+                    text3.txt
+    use-artifact:
+        runs-on: ubuntu-latest
+        needs: [create-artifacts]
+        steps:
+            - name: use artifact
+              uses: actions/download-artifact@v4
+              with:
+                name: "artifact-${{github.run_number}}"
+            - name: show artifact files
+              run: ls - lRt
+    create-outputs:
+        runs-on: ubuntu-latest
+        outputs: 
+            run_id: ${{ steps.github_workflow_run_op.outputs.RUN_ID }}
+        steps:
+            - name: Create output
+              id: github_workflow_run_op
+              run: echo "RUN_ID=${{github.run_id}}" >> $GITHUB_OUTPUT
+    use-outputs:
+        runs-on: ubuntu-latest
+        needs: [create-outputs]
+        steps:
+            - name: Show output
+              run: "Output = ${{ needs.create-outputs.outputs.run_id }}"
+    create-cache:
+        runs-on: ubuntu-latest
+        steps: 
+            - name: Create dir
+              run: |
+                mkdir data
+                echo "file1" > data/file1.txt
+                echo "file2" > data/file2.txt
+            - name: Cache data
+              uses: actions/cache@v4
+              with:
+                path: data
+                key: "cache-${{ github.run_number }}"
+    use-cache:
+        runs-on: ubuntu-latest
+        needs: ['create-cache']
+        steps: 
+            - name: get cache
+              uses: actions/cache@v4
+              with:
+                path: data
+                key: "cache-${{ github.run_number }}"
+            - name: show cache data
+              run: ls -lRt
