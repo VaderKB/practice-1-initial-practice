@@ -2,6 +2,8 @@ name: env vars
 run-name: env-vars
 on: 
     push:
+        branches:
+            - dev
 env:
     GLOBAL_VAR_1: global_var_1
     GLOBAL_VAR_2: global_var_2
