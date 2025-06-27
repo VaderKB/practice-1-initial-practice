@@ -2,6 +2,8 @@ name: cache
 run-name: cache
 on: 
     push:
+        branches:
+            - dev
 jobs:
     create-cache:
         runs-on: ubuntu-latest
