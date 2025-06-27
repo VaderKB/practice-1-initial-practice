@@ -30,7 +30,7 @@ jobs:
               with:
                 name: "artifact-${{github.run_number}}"
             - name: show artifact files
-              run: ls - lRt
+              run: ls -lRt
     create-outputs:
         runs-on: ubuntu-latest
         outputs: 
@@ -44,7 +44,7 @@ jobs:
         needs: [create-outputs]
         steps:
             - name: Show output
-              run: "Output = ${{ needs.create-outputs.outputs.run_id }}"
+              run: echo "Output = ${{ needs.create-outputs.outputs.run_id }}"
     create-cache:
         runs-on: ubuntu-latest
         steps: 
